@@ -1,5 +1,7 @@
 <footer>
-	<div class="flex flex-col text-center mr-auto ml-auto max-w-6xl py-4 gap-4 items-center justify-center">
+	<div
+		class="flex flex-col text-center mr-auto ml-auto max-w-6xl py-4 gap-4 items-center justify-center"
+	>
 		<h1 class="text-5xl font-pacifico">Rectilearn</h1>
 		<div class="flex flex-row items-center justify-center gap-16 my-4 text-lg">
 			<a href="/auth/login" class="hover-underline">Login</a>
@@ -8,7 +10,9 @@
 	</div>
 
 	<div class="w-full border-solid border-t text-lg dark:border-[#2D3748]">
-		<div class="w-full flex flex-col md:flex-row max-w-6xl mr-auto ml-auto gap-4 justify-center md:justify-between items-center py-4">
+		<div
+			class="w-full flex flex-col md:flex-row max-w-6xl mr-auto ml-auto gap-4 justify-center md:justify-between items-center py-4"
+		>
 			<span>
 				This project is open-source, check it out on <a
 					class="underline hover:text-blue-500"

@@ -11,7 +11,6 @@
 
 	let typewriter: number; // for setInterval/clearInterval
 
-
 	const doTyping = () => {
 		const string = messages[messageIndex];
 
@@ -25,7 +24,7 @@
 			charIndex++;
 		} else if (!typedChar && charIndex == string.length) {
 			charIndex = 0;
-			messageIndex = messageIndex >= messages.length - 1 ? 0 : (messageIndex + 1);
+			messageIndex = messageIndex >= messages.length - 1 ? 0 : messageIndex + 1;
 			isDeletingChars = false;
 		} else {
 			typedChar = typedChar.slice(0, -1);
@@ -33,7 +32,7 @@
 	};
 
 	onMount(() => {
-		typewriter = setInterval(doTyping, typingSpeed)
+		typewriter = setInterval(doTyping, typingSpeed);
 	});
 
 	onDestroy(() => {

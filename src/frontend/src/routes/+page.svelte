@@ -43,22 +43,30 @@
 
 <!-- Section1 (legacy name) -->
 <section class="max-w-7xl min-h-100vh sm:min-h-80vh w-full ml-auto mr-auto">
-	<div class="flex flex-col md:flex-row items-center gap-8 md:gap-36 py-20 md:py-28 mx-2 sm:mx-6 md:mx-10 lg:mx-6"><!-- ps-14 pe-14 ms-14 me-14 -->
+	<div
+		class="flex flex-col md:flex-row items-center gap-8 md:gap-36 py-20 md:py-28 mx-2 sm:mx-6 md:mx-10 lg:mx-6"
+	>
+		<!-- ps-14 pe-14 ms-14 me-14 -->
 		<!-- This gap-10 is crazy -->
 		<div class="flex-[1] flex-col gap-5 md:gap-10">
 			<div class="leading-none font-semibold font-3xl sm:font-4xl lg:font-6xl">
 				<h1 id="main-title">With <span class="font-pacifico">Rectilearn</span>,</h1>
 				<h2 class="text-4xl text-black dark:text-white">
 					studying is more <span class="text-sky-400 font-semibold"
-						><TypeWriter messages={['Fun', 'Efficient', 'Cooler', 'Exciting', 'Better', 'Easier']}/></span
+						><TypeWriter
+							messages={['Fun', 'Efficient', 'Cooler', 'Exciting', 'Better', 'Easier']}
+						/></span
 					>
 				</h2>
 			</div>
 			<p class="max-w-[28rem] sm:max-w-2xl text-gray-700 dark:text-gray-400 text-lg my-6 text-left">
-				<span class="font-pacifico">Rectilearn</span> makes studying a little less ordinary with games that let you have fun while
-				studying. But <span class="font-pacifico">Rectilearn</span> is not just another study game, unlike other study tools, it is
-				<a href="https://github.com/Sanyok6/TWTcodejam-team-Rectifiers" class="underline">Open Source</a>, it is directed towards language learners, and it makes studying much more
-				enjoyable.
+				<span class="font-pacifico">Rectilearn</span> makes studying a little less ordinary with
+				games that let you have fun while studying. But
+				<span class="font-pacifico">Rectilearn</span>
+				is not just another study game, unlike other study tools, it is
+				<a href="https://github.com/Sanyok6/TWTcodejam-team-Rectifiers" class="underline"
+					>Open Source</a
+				>, it is directed towards language learners, and it makes studying much more enjoyable.
 			</p>
 			<a href="/auth/signup">
 				<button class="bg-blue-400 hover:bg-blue-500 px-6 py-2 rounded-full">Start learning</button>
@@ -81,18 +89,24 @@
 			>
 			<div class="relative flex flex-col h-full rounded-2xl shadow-2xl w-full overflow-hidden">
 				<!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
-				<svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 z-10 translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] absolute text-white hover:bg-transparent hover:cursor-pointer"
-				on:click={() => playing = true} style={playing ? "display: none" : ""}>
-					<path 
+				<svg
+					viewBox="0 0 58 58"
+					xmlns="http://www.w3.org/2000/svg"
+					class="w-12 h-12 z-10 translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] absolute text-white hover:bg-transparent hover:cursor-pointer"
+					on:click={() => (playing = true)}
+					style={playing ? 'display: none' : ''}
+				>
+					<path
 						fill-rule="evenodd"
 						clip-rule="evenodd"
 						d="M28.9999 0.562988C13.3196 0.562988 0.562378 13.3202 0.562378 29.0005C0.562378 44.6808 13.3196 57.438 28.9999 57.438C44.6801 57.438 57.4374 44.6808 57.4374 29.0005C57.4374 13.3202 44.6801 0.562988 28.9999 0.562988ZM39.2223 30.272L23.5749 39.7247C23.3506 39.8591 23.0946 39.9314 22.8332 39.9342C22.5717 39.9369 22.3142 39.8701 22.0871 39.7406C21.86 39.611 21.6715 39.4234 21.5408 39.1969C21.4102 38.9705 21.3421 38.7133 21.3436 38.4519V19.5491C21.3421 19.2877 21.4102 19.0305 21.5408 18.8041C21.6715 18.5776 21.86 18.3899 22.0871 18.2604C22.3142 18.1308 22.5717 18.064 22.8332 18.0668C23.0946 18.0696 23.3506 18.1419 23.5749 18.2763L39.2223 27.729C39.4404 27.8619 39.6207 28.0486 39.7458 28.2713C39.8709 28.494 39.9366 28.7451 39.9366 29.0005C39.9366 29.2559 39.8709 29.507 39.7458 29.7297C39.6207 29.9523 39.4404 30.1391 39.2223 30.272Z"
-						fill="currentColor">
+						fill="currentColor"
+					>
 					</path>
 				</svg>
 				<!-- svelte-ignore a11y-media-has-caption -->
 				<!--  class="relative h-auto w-full p-10 rounded-[50px]" -->
-				<video bind:this={video} class="flex-[1]" on:click={() => playing = false}>
+				<video bind:this={video} class="flex-[1]" on:click={() => (playing = false)}>
 					<source
 						src="https://cdn.discordapp.com/attachments/563779252735180831/1156800111645556838/rectilearn.mp4"
 						type="video/mp4"
@@ -223,12 +237,15 @@
 					Ready to start learning smarter?
 				</h3>
 				<p class="max-w-2xl text-center text-xl mt-7 mb-10 dark:text-[#CBD5E0]">
-					Level up your learning journey with the best studying tool in existence! Create your account for
-					free!
+					Level up your learning journey with the best studying tool in existence! Create your
+					account for free!
 				</p>
 			</div>
 			<div class="flex flex-row gap-3 justify-center">
-				<a href="/auth/signup" class="p-[1em] rounded-[20px] text-2xl text-blue-600 dark:text-blue-400 shadow-[0px_0px_28px_14px_#0ff]">
+				<a
+					href="/auth/signup"
+					class="p-[1em] rounded-[20px] text-2xl text-blue-600 dark:text-blue-400 shadow-[0px_0px_28px_14px_#0ff]"
+				>
 					Start learning
 				</a>
 			</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { fetchApi, formatApiErrors } from '$lib/api';
+	import { fetchApi, fetchUserData, formatApiErrors } from '$lib/api';
 
 	let email = '';
 	let password = '';
@@ -8,22 +8,16 @@
 	let errorMessages: string[] = [];
 
 	async function handleLogin() {
-		const response = await fetchApi('auth/login/', {
+		const response = await fetchApi('auth/token/', {
 			method: 'POST',
 			body: JSON.stringify({
-				email,
+				username: email,
 				password
 			})
 		});
 
 		if (response.ok) {
-			// fetchUserData()
-			// .then(() => {
-			goto('/');
-			// })
-			// .catch((err) => {
-			// errorMessages = [err, ...errorMessages];
-			// });
+			fetchUserData().then(() => goto('/'));
 		} else {
 			errorMessages = formatApiErrors(await response.json());
 		}
@@ -60,6 +54,7 @@
 								<input
 									id="email"
 									type="email"
+									bind:value={email}
 									name="username"
 									class="dark:bg-black/[.16] border border-solid border-gray-300 dark:border-white/[.16] focus:outline-none hover:border-gray-500 hover:dark:border-white/[.24] focus:border-[#63b3ed] focus:shadow-[0_0_0_1px_#63b3ed] transition-[border-color] duration-200 px-3 py-2 rounded-md"
 								/>
@@ -69,6 +64,7 @@
 								<input
 									id="password"
 									type="password"
+									bind:value={password}
 									name="password"
 									class="dark:bg-black/[.16] border border-solid border-gray-300 dark:border-white/[.16] focus:outline-none hover:border-gray-500 hover:dark:border-white/[.24] focus:border-[#63b3ed] focus:shadow-[0_0_0_1px_#63b3ed] transition-[border-color] duration-200 px-3 py-2 rounded-md"
 								/>
