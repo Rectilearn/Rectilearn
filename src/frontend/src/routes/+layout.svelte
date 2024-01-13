@@ -2,7 +2,23 @@
 	import '../styles/main.scss';
 
 	import NavBar from './navbar.svelte';
+	import type { LayoutData } from './$types';
 	import ProgressBar from './routeProgressBar.svelte';
+	import { fetchUserData } from '$lib/api';
+	import { userData } from '$lib/stores';
+	import { browser } from '$app/environment';
+
+	export let data: LayoutData;
+
+	$: {
+		if (!browser) {
+			break $;
+		}
+
+		if (data.isLoggedIn && !$userData) {
+			fetchUserData();
+		}
+	}
 </script>
 
 <ProgressBar />
