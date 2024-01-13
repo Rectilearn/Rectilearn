@@ -9,7 +9,7 @@
 	let errorMessages: string[] = [];
 
 	async function handleSignup() {
-		const response = await fetchApi('auth/users/create', {
+		const response = await fetchApi('auth/users/create/', {
 			method: 'POST',
 			body: JSON.stringify({
 				email,

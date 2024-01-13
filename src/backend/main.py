@@ -73,7 +73,7 @@ oauth2_scheme = OAuth2PasswordBearerCookie(tokenUrl="auth/token/")
 
 app = FastAPI()
 
-origins = ["*"]
+origins = ["http://localhost:5173", "http://localhost:3000"]
 
 app.add_middleware(
     CORSMiddleware,
