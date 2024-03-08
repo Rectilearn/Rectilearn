@@ -57,7 +57,6 @@
 
 <style lang="scss">
 	footer {
-		/* @apply py-8; */
 		@apply text-gray-700 dark:text-gray-300
 			bg-black/[0.05] dark:bg-[rgba(30,_30,_30,_0.5)];
 	}

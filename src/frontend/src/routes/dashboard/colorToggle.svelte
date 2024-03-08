@@ -54,16 +54,15 @@
              text-gray-600 dark:text-inherit relative;
 
 		&:hover {
-			@apply no-underline bg-[#bee3f8] dark:bg-[#2D3748];
+			@apply no-underline bg-[#EDF2F7] dark:bg-gray-900;
 		}
 		
 		&:active {
-			@apply bg-[#E2E8F0] dark:bg-[rgba(255,255,255,0.16)];
+			@apply bg-[#E2E8F0];
 		}
 
 		&:focus {
 			@apply shadow-[0_0_0_3px_rgba(66,153,225,0.6)];
-			// dark:shadow-[0_0_0_3px_rgba(66,153,225,0.6)];
 		}
 	}
 

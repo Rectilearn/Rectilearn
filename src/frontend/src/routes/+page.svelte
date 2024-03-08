@@ -89,7 +89,7 @@
 			>
 			<div class="relative flex flex-col h-full rounded-2xl shadow-2xl w-full overflow-hidden">
 				<!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
-				<svg
+				<!-- <svg
 					viewBox="0 0 58 58"
 					xmlns="http://www.w3.org/2000/svg"
 					class="w-12 h-12 z-10 translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] absolute text-white hover:bg-transparent hover:cursor-pointer"
@@ -103,16 +103,18 @@
 						fill="currentColor"
 					>
 					</path>
-				</svg>
+				</svg> -->
 				<!-- svelte-ignore a11y-media-has-caption -->
 				<!--  class="relative h-auto w-full p-10 rounded-[50px]" -->
-				<video bind:this={video} class="flex-[1]" on:click={() => (playing = false)}>
+				<iframe class="flex-[1] aspect-video" src="https://www.youtube.com/embed/0Z5OMzX-Lyw?si=Zxxeq9G5glP7dYq4" title="Rectilearn promotion video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+				</iframe>
+				<!-- <video bind:this={video} class="flex-[1]" on:click={() => (playing = false)}>
 					<source
 						src="https://cdn.discordapp.com/attachments/563779252735180831/1156800111645556838/rectilearn.mp4"
 						type="video/mp4"
 					/>
 					Your browser does not support the video tag.
-				</video>
+				</video> -->
 			</div>
 		</div>
 	</div>
@@ -285,4 +287,9 @@
 	.element-visible {
 		@apply scale-100;
 	}
+
+	// :global(body) {
+	// 	@apply bg-[radial-gradient(circle,_rgba(255,255,255,1)_30%,_rgba(179,235,255,1)_100%)]
+    //        dark:bg-[radial-gradient(circle,_rgba(0,0,0,1)_30%,_rgba(0,44,60,1)_100%)];
+	// }
 </style>

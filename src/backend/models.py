@@ -1,6 +1,16 @@
 from datetime import datetime
 
-from sqlalchemy import ARRAY, BigInteger, Column, Integer, String, DateTime, ForeignKey, Boolean
+from sqlalchemy import (
+    ARRAY,
+    BigInteger,
+    Column,
+    Integer,
+    String,
+    DateTime,
+    Date,
+    ForeignKey,
+    Boolean,
+)
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -15,8 +25,12 @@ class User(Base):
     role = Column(String, default="user")  # admin/user
     created_at = Column(DateTime(), default=datetime.utcnow())
     study_sets = relationship("StudySets")
-    high_scores = relationship("HightScores", uselist=False, backref="parent", lazy="subquery")
+    high_scores = relationship(
+        "HightScores", uselist=False, backref="parent", lazy="subquery"
+    )
     profile_picture_index = Column(Integer, default=0)
+    visit_streak = Column(Integer, default=0)
+    last_visit = Column(Date)
 
 
 class HightScores(Base):

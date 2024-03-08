@@ -10,7 +10,10 @@
 	async function handleLogin() {
 		const response = await fetchApi('auth/token/', {
 			method: 'POST',
-			body: JSON.stringify({
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			body: new URLSearchParams({
 				username: email,
 				password
 			})
