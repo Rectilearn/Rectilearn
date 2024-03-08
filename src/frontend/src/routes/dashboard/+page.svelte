@@ -14,6 +14,10 @@
 	$: highScore = getHighScoreAndGame($userData?.high_scores || {}) as [string, number];
 </script>
 
+<svelte:head>
+	<title>Dashboard</title>
+</svelte:head>
+
 <div class="stats-grid">
 	<div class="stats-card" id="visit-streak">
 		<div class="flex items-center justify-center rounded-full border-[10px] border-sky-600 size-24">
