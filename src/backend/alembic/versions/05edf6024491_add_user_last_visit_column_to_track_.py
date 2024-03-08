@@ -22,7 +22,7 @@ def upgrade():
     op.create_unique_constraint(None, 'study_sets', ['id'])
     op.create_unique_constraint(None, 'studyset_questions', ['id'])
     op.add_column('users', sa.Column('visit_streak', sa.Integer(), nullable=True))
-    op.add_column('users', sa.Column('last_visit', sa.Integer(), nullable=True))
+    op.add_column('users', sa.Column('last_visit', sa.Date(), nullable=True))
     # ### end Alembic commands ###
 
 

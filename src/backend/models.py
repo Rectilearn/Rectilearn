@@ -30,7 +30,7 @@ class User(Base):
     )
     profile_picture_index = Column(Integer, default=0)
     visit_streak = Column(Integer, default=0)
-    last_visit = Column(Integer, default=0)
+    last_visit = Column(Date)
 
 
 class HightScores(Base):

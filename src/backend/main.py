@@ -1,7 +1,7 @@
 import psycopg2
 import random
 import typing
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from http import HTTPStatus
 from typing import Optional
 
@@ -25,11 +25,11 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class OAuth2PasswordBearerCookie(OAuth2):
     def __init__(
-            self,
-            tokenUrl: str,
-            scheme_name: str = None,
-            scopes: dict = None,
-            auto_error: bool = True,
+        self,
+        tokenUrl: str,
+        scheme_name: str = None,
+        scopes: dict = None,
+        auto_error: bool = True,
     ):
         if not scopes:
             scopes = {}
@@ -141,7 +141,9 @@ async def index():
 
 
 @app.post("/auth/token/", response_model=schemas.TokenData)
-def login_for_access_token(response: Response, form_data: OAuth2PasswordRequestForm = Depends()):
+def login_for_access_token(
+    response: Response, form_data: OAuth2PasswordRequestForm = Depends()
+):
     # NOTE: The email is expected as the username
     user: typing.Union[models.User, bool] = authenticate_user(
         form_data.username, form_data.password
@@ -172,6 +174,15 @@ def login_for_access_token(response: Response, form_data: OAuth2PasswordRequestF
 
 @app.get("/auth/users/me/", response_model=schemas.User)
 async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
+    today = date.today()
+    if not current_user.last_visit:
+        current_user = crud.update_user_visit(
+            current_user.id, today, False, reset_visit_streak=True
+        )
+
+    if current_user.last_visit and (today - current_user.last_visit) == 1:
+        current_user = crud.update_user_visit(current_user.id, today, True)
+
     return current_user
 
 
@@ -179,14 +190,12 @@ async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
 def create_user(user: schemas.UserCreate):
     user.password = get_password_hash(user.password)
     user = crud.create_user(user)
-    print(user.high_scores)
-    print(user.profile_picture_index)
     return user
 
 
 @app.post("/studysets/new/", response_model=schemas.StudySet)
 def create_study_set(
-        study_set: schemas.StudySetCreate, user: schemas.User = Depends(get_current_user)
+    study_set: schemas.StudySetCreate, user: schemas.User = Depends(get_current_user)
 ):
     v = crud.create_study_set(study_set, user.id)
     return v
@@ -201,9 +210,9 @@ def get_study_set(user: schemas.User = Depends(get_current_user)):
     "/studysets/{study_set_id}/add_question/", response_model=schemas.StudySetQuestions
 )
 def new_question(
-        study_set_id: int,
-        question: schemas.StudySetQuestionCreate,
-        user: schemas.User = Depends(get_current_user),
+    study_set_id: int,
+    question: schemas.StudySetQuestionCreate,
+    user: schemas.User = Depends(get_current_user),
 ):
     study_set = crud.get_study_set(study_set_id)
     if study_set.creator != user.id:
@@ -215,13 +224,11 @@ def new_question(
     return crud.add_question(study_set_id, question)
 
 
-@app.put(
-    "/studysets/{study_set_id}/update/", response_model=schemas.StudySet
-)
+@app.put("/studysets/{study_set_id}/update/", response_model=schemas.StudySet)
 def update_studyset(
-        study_set_id: int,
-        new_study_set: schemas.StudySetCreate,
-        user: schemas.User = Depends(get_current_user),
+    study_set_id: int,
+    new_study_set: schemas.StudySetCreate,
+    user: schemas.User = Depends(get_current_user),
 ):
     study_set = crud.get_study_set(study_set_id)
     if study_set.creator != user.id:
@@ -237,9 +244,9 @@ def update_studyset(
 
 @app.delete("/studysets/{study_set_id}/delete_question/")
 def delete_question(
-        study_set_id: int,
-        question_id: int,
-        user: schemas.User = Depends(get_current_user),
+    study_set_id: int,
+    question_id: int,
+    user: schemas.User = Depends(get_current_user),
 ):
     study_set = crud.get_study_set(study_set_id)
     if study_set.creator != user.id:
@@ -266,8 +273,8 @@ def delete_question(
 
 @app.delete("/studysets/{study_set_id}/delete_study_set/")
 def delete_study_set(
-        study_set_id: int,
-        user: schemas.User = Depends(get_current_user),
+    study_set_id: int,
+    user: schemas.User = Depends(get_current_user),
 ):
     study_set = crud.get_study_set(study_set_id)
     if study_set.creator != user.id:
@@ -293,7 +300,9 @@ def get_public_study_sets():
 
 
 @app.get("/studysets/{study_set_id}/", response_model=schemas.StudySet)
-def get_study_set_by_id(study_set_id: int, user: schemas.User = Depends(get_current_user)):
+def get_study_set_by_id(
+    study_set_id: int, user: schemas.User = Depends(get_current_user)
+):
     set = crud.get_study_set(study_set_id)
     if set == None:
         raise HTTPException(
@@ -335,18 +344,28 @@ def logout(response: Response):
 
 
 @app.post("/set-high-score/{game_mode}/{new_high_score}/", response_model=schemas.User)
-def set_high_score(game_mode: str, new_high_score: int, user: schemas.User = Depends(get_current_user)):
+def set_high_score(
+    game_mode: str, new_high_score: int, user: schemas.User = Depends(get_current_user)
+):
     return crud.update_high_score(user.id, game_mode, new_high_score)
 
 
 @app.post("/set-profile-picture/{profile_picture_index}/", response_model=schemas.User)
-def set_profile_picture(profile_picture_index: int, user: schemas.User = Depends(get_current_user)):
+def set_profile_picture(
+    profile_picture_index: int, user: schemas.User = Depends(get_current_user)
+):
     return crud.set_profile_picture_index(user.id, profile_picture_index)
 
 
-@app.post("/studysets/update-question-accuracy/{studyset_id}/", response_model=schemas.StudySet)
-def update_question_accuracy(studyset_id: int, question_accuracies: typing.List[schemas.QuestionAccuracy],
-                             user: schemas.User = Depends(get_current_user)):
+@app.post(
+    "/studysets/update-question-accuracy/{studyset_id}/",
+    response_model=schemas.StudySet,
+)
+def update_question_accuracy(
+    studyset_id: int,
+    question_accuracies: typing.List[schemas.QuestionAccuracy],
+    user: schemas.User = Depends(get_current_user),
+):
     return crud.update_questions_accuracy(studyset_id, user, question_accuracies)
 
 
