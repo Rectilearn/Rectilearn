@@ -29,7 +29,6 @@ export async function fetchUserData() {
 
 	if (response.ok) {
 		userData.set(await response.json());
-		console.log('okok')
 	} else {
 		console.error(`Failed to fetch user data ${response.status}: ${response.statusText}`);
 	}
