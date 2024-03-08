@@ -180,7 +180,7 @@ async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
             current_user.id, today, False, reset_visit_streak=True
         )
 
-    if current_user.last_visit and (today - current_user.last_visit) == 1:
+    elif current_user.last_visit and (today - current_user.last_visit) == 1:
         current_user = crud.update_user_visit(current_user.id, today, True)
 
     return current_user

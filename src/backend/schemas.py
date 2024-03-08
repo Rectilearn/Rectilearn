@@ -2,14 +2,12 @@ import typing
 from datetime import datetime, date
 
 from fastapi import HTTPException
-from pydantic import BaseModel, validator, Field
+from pydantic import BaseModel, validator
 
 from settings import PROFILE_PICTURE_INDEXES
 
 
 class HighScores(BaseModel):
-    id: int
-    user: int
     fishillionare_highscore: int
     foodfight_highscore: int
     dogeball_highscore: int
@@ -62,7 +60,7 @@ class User(UserBase):
         if profile_picture_index not in PROFILE_PICTURE_INDEXES:
             raise HTTPException(
                 status_code=422,
-                detail=f"profile_picture_index only can be the following: {PROFILE_PICTURE_INDEXES}",
+                detail=f"profile_picture_index only can be the following: {PROFILE_PICTURE_INDEXES}"
             )
 
         return profile_picture_index

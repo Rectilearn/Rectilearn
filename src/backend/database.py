@@ -5,7 +5,6 @@ from sqlalchemy.ext.declarative import declarative_base
 
 
 if settings.PRODUCTION or settings.USE_LOCAL_PG:
-    print('okokokok')
     engine = sqlalchemy.create_engine(
      f"{'cockroachdb+psycopg2' if not settings.USE_LOCAL_PG else ''}" + settings.POSTGRESQL_URI
     )
