@@ -27,9 +27,9 @@
 
 <style lang="scss">
 	.sidebar {
-		@apply flex flex-col items-center gap-2 grow-0
+		@apply flex flex-col items-center gap-2 grow-0 dark:border-t dark:border-gray-800
 			   overflow-y-auto pt-4 text-gray-700 dark:text-gray-300
-			bg-black/[0.05] dark:bg-[rgba(18,17,17,0.5)];
+			   bg-black/[.05] dark:bg-black/[.5];
 
 		a {
 			@apply flex gap-3 items-center justify-start my-4 mx-20;
