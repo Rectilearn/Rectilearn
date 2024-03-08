@@ -4,6 +4,6 @@ export const load: LayoutServerLoad = (request) => {
     const sessionId = request.cookies.get("Authorization");
 
     return {
-        isLoggedIn: sessionId !== undefined && sessionId !== "",
+        isLoggedIn: !!sessionId,
     };
 };

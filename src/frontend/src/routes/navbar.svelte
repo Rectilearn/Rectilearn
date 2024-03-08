@@ -1,11 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { userData } from '$lib/stores';
 	import ColorToggle from './colorToggle.svelte';
+
+	export let isLoggedIn: boolean;
+
+	$: isActuallyLoggedIn = isLoggedIn || !!$userData;
 
 	const links = [
 		{
 			name: 'Home',
-			url: '/'
+			url: '/',
+			authEndpoint: true
 		},
 		// {
 		//   name: 'About',  // about page does not exist currently
@@ -13,15 +19,18 @@
 		// },
 		{
 			name: 'Login',
-			url: '/auth/login'
+			url: '/auth/login',
+			authEndpoint: true
 		},
 		{
 			name: 'Signup',
-			url: '/auth/signup'
+			url: '/auth/signup',
+			authEndpoint: true
 		},
 		{
 			name: 'Dashboard',
-			url: '/dashboard'
+			url: '/dashboard',
+			authEndpoint: false
 		}
 	];
 
@@ -37,8 +46,9 @@
 			// } else if (i.url === "/dashboard" /* && !ctx.loggedIn */) {
 			// 	return false;
 			// }
-			console.log($page.url.pathname.toLowerCase());
-			return i.url !== $page.url.pathname.toLowerCase();
+			if (!isActuallyLoggedIn) return i.url !== $page.url.pathname.toLowerCase();
+			// dont show auth endpoints to logged in users
+			else return !i.authEndpoint && i.url !== $page.url.pathname.toLowerCase();
 		});
 	}
 </script>

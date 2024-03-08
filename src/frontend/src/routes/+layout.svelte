@@ -23,7 +23,7 @@
 
 <ProgressBar />
 
-<NavBar />
+<NavBar bind:isLoggedIn={data.isLoggedIn} />
 
 <main class="h-[calc(100vh_-_var(--navbar-height))]">
 	<slot />

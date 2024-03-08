@@ -2,17 +2,24 @@ from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
+
 # from .. import settings
 import settings
 from alembic import context
+
 # from ..models import Base
 from models import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-if settings.PRODUCTION:
-    config.set_main_option("sqlalchemy.url", "postgresql+psycopg2"+settings.POSTGRESQL_URI)
+
+if settings.PRODUCTION or settings.USE_LOCAL_PG:
+    config.set_main_option(
+        "sqlalchemy.url",
+        f"{'cockroachdb+psycopg2' if not settings.USE_LOCAL_PG else ''}"
+        + settings.POSTGRESQL_URI,
+    )
 
 else:
     # Testing environment
