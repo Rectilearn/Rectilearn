@@ -3,4 +3,7 @@
         "strings": true
     },
     "scss.lint.unknownAtRules": "ignore",
+    "cSpell.words": [
+        "studysets"
+    ],
 }

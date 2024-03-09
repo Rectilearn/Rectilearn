@@ -35,3 +35,7 @@ body {
 :root {
 	--navbar-height: 64px;
 }
+
+button {
+	@apply block;
+}

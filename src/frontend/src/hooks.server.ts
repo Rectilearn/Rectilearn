@@ -5,7 +5,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     const authEndpoints = ["/auth/", "/auth/login", "/auth/signup", "/"];
 
     const isLoggedIn = !!event.cookies.get("Authorization"); // Check if the sessionid cookie exists
-    console.log(urlEndpoint)
+
     if (isLoggedIn) {
         // If the user is logged in and he visits the authentication pages
         if (authEndpoints.includes(urlEndpoint)) {

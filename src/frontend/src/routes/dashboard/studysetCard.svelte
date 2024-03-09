@@ -13,7 +13,7 @@
 			headers: {'Content-Type': 'application/json'}
 		});
 		
-		if (response.status === 200) {
+		if (response.ok) {
 			dispatch("delete", id);
 		} else {
 			// toast({
