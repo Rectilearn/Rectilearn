@@ -81,8 +81,8 @@
 				}}
 			/>
 		{/each}
-		<button on:click={() => (isStudySetCreateModalOpen = true)}>
-			<div class="flex justify-center items-center">
+		<button class="h-full" on:click={() => (isStudySetCreateModalOpen = true)}>
+			<div class="flex justify-center items-center h-full">
 				<div
 					class="flex flex-col justify-between max-w-[320px] w-full bg-white dark:bg-gray-700 shadow-2xl rounded-xl p-4 text-center h-full min-h-[22em] md:min-h-[26em]"
 				>

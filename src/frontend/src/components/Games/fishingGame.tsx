@@ -320,6 +320,7 @@ const FishingGame = ({ studySet, avatar }: { studySet: StudySet, avatar: number 
                         if (player.isTouching(s))
                         touching = true;
                     });
+                    
                     if (touching) {
 
                         if (cash.value >= COST*5) {

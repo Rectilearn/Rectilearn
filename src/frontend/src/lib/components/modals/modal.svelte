@@ -57,7 +57,7 @@
 
 <style lang="scss">
     dialog {
-        @apply opacity-0 rounded-lg -translate-y-3 bg-neutral-800 text-white
+        @apply opacity-0 rounded-lg -translate-y-3 bg-white dark:bg-[#2D3748] text-black dark:text-white
 			   transition-all duration-200 min-w-[35%] select-none max-h-full max-w-full;
     }
     dialog.open {
