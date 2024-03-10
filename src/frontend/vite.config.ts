@@ -4,6 +4,9 @@ import { defineConfig } from 'vite';
 const BACKEND_ADDR = process.env.BACKEND_ADDR || 'http://127.0.0.1:8000/';
 
 export default defineConfig({
+	// css: {
+		
+	// },
 	plugins: [sveltekit()],
 	server: {
 		proxy: {
