@@ -36,6 +36,7 @@
   "dependencies": {
     "kaboom": "^3000.1.17",
     "postcss-load-config": "^5.0.3",
-    "sass": "^1.69.7"
+    "sass": "^1.69.7",
+    "svelte-sonner": "^0.3.19"
   }
 }
