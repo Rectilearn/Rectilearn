@@ -12,7 +12,7 @@
 <form {...$$restProps} on:submit|preventDefault>
     <slot />
 
-    <FormErrorMessages bind:errorMessages />
+    <FormErrorMessages {errorMessages} />
 </form>
 
 <style></style>

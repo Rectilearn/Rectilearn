@@ -1,16 +1,17 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { fetchApi, fetchUserData, formatApiErrors } from '$lib/api';
+	import { goto } from "$app/navigation";
+	import { fetchApi, fetchUserData } from "$lib/api";
+	import { Form } from "$lib/components/forms";
 
-	let username = '';
-	let email = '';
-	let password = '';
+	let username = "";
+	let email = "";
+	let password = "";
 
 	let errorMessages: string[] = [];
 
 	async function handleSignup() {
-		const response = await fetchApi('auth/users/create/', {
-			method: 'POST',
+		const response = await fetchApi("auth/users/create/", {
+			method: "POST",
 			body: JSON.stringify({
 				email,
 				name: username,
@@ -20,9 +21,9 @@
 		});
 
 		if (response.ok) {
-			fetchUserData().then(() => goto('/'));
+			fetchUserData().then(() => goto("/"));
 		} else {
-			errorMessages = formatApiErrors(await response.json());
+			errorMessages = [await response.json()]["detail"];
 		}
 	}
 </script>
@@ -49,7 +50,7 @@
 			<div
 				class="py-6 sm:py-8 px-4 sm:px-10 bg-white dark:bg-[#2D3748] shadow-none sm:shadow-md rounded-xl"
 			>
-				<form on:submit|preventDefault={handleSignup}>
+				<Form {errorMessages} on:submit={handleSignup}>
 					<div class="flex flex-col space-y-6">
 						<div class="flex flex-col space-y-5">
 							<div class="flex flex-col space-y-2">
@@ -89,7 +90,7 @@
 							>Sign Up</button
 						>
 					</div>
-				</form>
+				</Form>
 			</div>
 		</div>
 	</div>

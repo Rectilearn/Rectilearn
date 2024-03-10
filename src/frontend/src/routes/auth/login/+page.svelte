@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { fetchApi, fetchUserData, formatApiErrors } from '$lib/api';
+	import { Form } from '$lib/components/forms';
 
 	let email = '';
 	let password = '';
@@ -22,7 +23,8 @@
 		if (response.ok) {
 			fetchUserData().then(() => goto('/'));
 		} else {
-			errorMessages = formatApiErrors(await response.json());
+			console.log()
+			errorMessages = [(await response.json())["detail"]];
 		}
 	}
 </script>
@@ -49,7 +51,7 @@
 			<div
 				class="py-6 sm:py-8 px-4 sm:px-10 bg-white dark:bg-[#2D3748] shadow-none sm:shadow-md rounded-xl"
 			>
-				<form on:submit|preventDefault={handleLogin}>
+				<Form bind:errorMessages on:submit={handleLogin}>
 					<div class="flex flex-col space-y-6">
 						<div class="flex flex-col space-y-5">
 							<div class="flex flex-col space-y-2">
@@ -99,7 +101,7 @@
 							</a>
 						</div>
 					</div>
-				</form>
+				</Form>
 			</div>
 		</div>
 	</div>
