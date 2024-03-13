@@ -51,17 +51,12 @@
 	<title>Dashboard</title>
 </svelte:head>
 
-<<<<<<< HEAD
 {#if selected === ''}
 	<div class="stats-grid" on:click={() => {
 		toast.info("ok", {
 			duration: 5000
 		});
 	}}>
-=======
-{#if selected === ""}
-	<div class="stats-grid">
->>>>>>> d6bd6b5e620f3b3ecaee4b06037214e3e0e839de
 		<div class="stats-card" id="visit-streak">
 			<div
 				class="flex items-center justify-center rounded-full border-[10px] border-sky-600 size-24"
