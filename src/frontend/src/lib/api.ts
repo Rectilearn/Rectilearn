@@ -28,7 +28,7 @@ export async function fetchUserData() {
 	const response = await fetchApi('auth/users/me/');
 
 	if (response.ok) {
-		// @ts-ignore
+		// @ts-expect-error: idk
 		userData.set(JSON.parse(await response.text(), (_key, value, data) => typeof value === 'number' ? BigInt(data.source) : value));
 	} else {
 		console.error(`Failed to fetch user data ${response.status}: ${response.statusText}`);

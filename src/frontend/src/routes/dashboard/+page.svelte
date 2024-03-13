@@ -1,14 +1,21 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { fetchApi } from '$lib/api';
-	import { userData, studySets } from '$lib/stores';
-	import StudySetCard from './studysetCard.svelte';
-	import { page } from '$app/stores';
-	import CreateStudySetModal from './studysetCreateModal.svelte';
+	import { onMount } from "svelte";
+	import { fetchApi } from "$lib/api";
+	import { userData, studySets } from "$lib/stores";
+	import StudySetCard from "./studysetCard.svelte";
+	import { page } from "$app/stores";
+	import CreateStudySetModal from "./studysetCreateModal.svelte";
+	import StudySetEditModal from "./studysetEditModal.svelte";
+	import StudySetDeleteModal from "./studySetDeleteModal.svelte";
+	import type { IStudySet } from "$lib/types";
 
-	$: selected = $page.url.hash || '';
+	$: selected = $page.url.hash || "";
 
 	let isStudySetCreateModalOpen = false;
+	let isStudySetEditModalOpen = false;
+	let isStudySetDeleteModalOpen = false;
+	let studySetToEdit: IStudySet | undefined = undefined;
+	let studySetToDelete: IStudySet | undefined = undefined;
 
 	$: highScore = getHighScoreAndGame($userData?.high_scores || {}) as [string, number];
 
@@ -24,14 +31,14 @@
 
 	onMount(async () => {
 		if ($studySets === undefined) {
-			const response = await fetchApi('studysets/');
+			const response = await fetchApi("studysets/");
 
 			if (response.ok) {
 				// @ts-ignore
 				const data = JSON.parse(await response.text(), (_key, value, data) =>
-					typeof value === 'number' ? BigInt(data.source) : value
+					typeof value === "number" ? BigInt(data.source) : value
 				);
-				console.log('Data', data);
+				console.log("Data", data);
 				studySets.set(data);
 			}
 		}
@@ -42,7 +49,7 @@
 	<title>Dashboard</title>
 </svelte:head>
 
-{#if selected === ''}
+{#if selected === ""}
 	<div class="stats-grid">
 		<div class="stats-card" id="visit-streak">
 			<div
@@ -56,8 +63,8 @@
 			<span class="font-semibold text-lg">Highscore</span>
 			{#if highScore}
 				<div class="flex items-center flex-col w-full h-full justify-around">
-					<span class="font-bold text-5xl">{highScore[1].toString().padStart(4, '0')}</span>
-					<span class="capitalize text-4xl font-semibold">{highScore[0].split('_')[0]}</span>
+					<span class="font-bold text-5xl">{highScore[1].toString().padStart(4, "0")}</span>
+					<span class="capitalize text-4xl font-semibold">{highScore[0].split("_")[0]}</span>
 				</div>
 			{/if}
 		</div>
@@ -73,11 +80,13 @@
 		{#each $studySets || [] as studySet (studySet.id)}
 			<StudySetCard
 				{studySet}
-				on:delete={(e) => {
-					studySets.update((set) => {
-						if (!set) return;
-						return set.filter((i) => i.id !== e.detail);
-					});
+				on:delete={(event) => {
+					studySetToDelete = event.detail;
+					isStudySetDeleteModalOpen = true;
+				}}
+				on:edit={(event) => {
+					studySetToEdit = event.detail;
+					isStudySetEditModalOpen = true;
 				}}
 			/>
 		{/each}
@@ -87,17 +96,20 @@
 					class="flex flex-col justify-between max-w-[320px] w-full bg-white dark:bg-gray-700 shadow-2xl rounded-xl p-4 text-center h-full min-h-[22em] md:min-h-[26em]"
 				>
 					<p class="h-full md:text-[1.5em] flex items-center justify-center">Create new studyset</p>
-					<button
+					<span
 						class="flex justify-center items-center w-full aspect-square rounded-xl text-[12em] font-thin bg-gray-200 dark:bg-gray-800"
-						>+</button
+						>+</span
 					>
 				</div>
-			</div></button
-		>
+			</div>
+		</button>
 	</section>
-{:else if selected === '#games'}
+
+	<StudySetEditModal bind:isOpen={isStudySetEditModalOpen} studySet={studySetToEdit} />
+	<StudySetDeleteModal bind:isOpen={isStudySetDeleteModalOpen} studySet={studySetToDelete} />
+{:else if selected === "#games"}
 	<section>you got no games</section>
-{:else if selected === '#explore'}
+{:else if selected === "#explore"}
 	<section>explore the world</section>
 {/if}
 
@@ -134,7 +146,7 @@
 		}
 	}
 
-	@media screen and (min-width: theme('screens.sm')) {
+	@media screen and (min-width: theme("screens.sm")) {
 		.stats-grid {
 			grid-template-rows: auto;
 			grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -166,7 +178,7 @@
 		height: auto;
 	}
 
-	@media screen and (min-width: theme('screens.sm')) {
+	@media screen and (min-width: theme("screens.sm")) {
 		.studyset-card-grid {
 			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 			// grid-template-rows: repeat(auto-fit, minmax(500px, 1fr));

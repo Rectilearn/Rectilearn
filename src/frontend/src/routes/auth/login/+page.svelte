@@ -21,7 +21,7 @@
 		});
 
 		if (response.ok) {
-			fetchUserData().then(() => goto('/'));
+			fetchUserData().then(() => goto('/dashboard'));
 		} else {
 			console.log()
 			errorMessages = [(await response.json())["detail"]];
