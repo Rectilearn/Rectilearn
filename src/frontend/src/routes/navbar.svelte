@@ -46,7 +46,7 @@
 			// } else if (i.url === "/dashboard" /* && !ctx.loggedIn */) {
 			// 	return false;
 			// }
-			if (!isActuallyLoggedIn) return i.url !== $page.url.pathname.toLowerCase();
+			if (!isActuallyLoggedIn) return i.url !== $page.url.pathname.toLowerCase() && i.authEndpoint;
 			// dont show auth endpoints to logged in users
 			else return !i.authEndpoint && i.url !== $page.url.pathname.toLowerCase();
 		});

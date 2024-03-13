@@ -21,9 +21,9 @@
 		});
 
 		if (response.ok) {
-			fetchUserData().then(() => goto("/"));
+			fetchUserData().then(() => goto("/dashboard"));
 		} else {
-			errorMessages = [await response.json()]["detail"];
+			errorMessages = [(await response.json())["detail"]];
 		}
 	}
 </script>
