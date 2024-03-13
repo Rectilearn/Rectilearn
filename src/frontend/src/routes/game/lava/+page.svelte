@@ -3,6 +3,8 @@
     import kaboom, { type KaboomCtx } from "kaboom";
     import "kaboom/global";
 	import { onKeysDown, onKeysPressed, onKeysReleased } from "../game";
+	import { toast } from "svelte-sonner";
+	import Toast from "$lib/components/toast.svelte";
 
     const avatar = "test";
 
@@ -271,6 +273,10 @@
                         energyText.text = "Energy: "+energyText.value;
                         player.doubleJump();
                     } else {
+                        toast.error("Out of energy", {
+                            description: "Press \"e\" or \"z\" to answer questions and gain energy",
+                            duration: 5000
+                        });
                         // alert("No energy")
                         // toast({
                         //     title: 'Out of energy',
@@ -318,3 +324,5 @@
 </script>
 
 <canvas bind:this={cRef} class="w-full h-full"></canvas>
+
+<Toast />

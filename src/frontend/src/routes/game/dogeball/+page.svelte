@@ -3,6 +3,8 @@
     import kaboom, { type AreaComp, type GameObj, type KaboomCtx, type PosComp, type SpriteComp, type TextComp } from "kaboom";
     import "kaboom/global";
 	import { onKeysDown, onKeysPressed, onKeysReleased } from "../game";
+	import { toast } from "svelte-sonner";
+    import Toast from "$lib/components/toast.svelte";
 
     const avatar = "test";
 
@@ -417,7 +419,11 @@
                             // })
                         }
                     } else {
-                        alert("out of cash");
+                        // alert("out of cash");
+                        toast.error("Out of cash", {
+                            description: "Press \"space\" to answer questions and earn cash.",
+                            duration: 5000,
+                        })
                         // toast({
                         //     title: 'Out of cash',
                         //     description: "Press \"space\" to answer questions and earn cash.",
@@ -444,7 +450,11 @@
                            cash.text = "Cash: " + cash.value;
                            SPEED += 50;
                         } else {
-                            alert("Not enough " + SPEED/10)
+                            // alert("Not enough " + SPEED/10);
+                            toast.warning("Not enough money", {
+                                description: "you need $"+SPEED/10+" for that upgrade!",
+                                duration: 5000
+                            });
                             // toast({
                             //     title: 'Not enough money',
                             //     description: "you need $"+SPEED/10+" for that upgrade!",
@@ -468,7 +478,11 @@
                            cash.text = "Cash: " + cash.value;
                            RANGE += 50;
                         } else {
-                            alert("Not enough " + RANGE/50);
+                            // alert("Not enough " + RANGE/50);
+                            toast.warning("Not enough money", {
+                                description: "you need $"+RANGE/50+" for that upgrade!",
+                                duration: 5000
+                            });
                             // toast({
                             //     title: 'Not enough money',
                             //     description: "you need $"+RANGE/50+" for that upgrade!",
@@ -492,7 +506,11 @@
                            cash.text = "Cash: " + cash.value;
                            FIRERATE /= 1.2;
                         } else {
-                            alert("Not enough " + (10+Math.floor(2*(5-FIRERATE))))
+                            // alert("Not enough " + (10+Math.floor(2*(5-FIRERATE))))
+                            toast.warning("Not enough money", {
+                                description: "you need $"+(10+Math.floor(2*(5-FIRERATE)))+" for that upgrade!",
+                                duration: 5000
+                            });
                             // toast({
                             //     title: 'Not enough money',
                             //     description: "you need $"+(10+Math.floor(2*(5-FIRERATE)))+" for that upgrade!",
@@ -511,6 +529,10 @@
                     s.onUpdate(() => {
                         if (player.isColliding(s) && enabled == false) {
                             enabled = true;
+                            toast.info("Upgrade Speed", {
+                                description: "Press \"F\" to upgrade your teams speed.",
+                                duration: 3000
+                            });
                             // toast({
                             //     title: 'Upgrade Speed',
                             //     description: "Press \"F\" to upgrade your teams speed.",
@@ -529,6 +551,10 @@
                     s.onUpdate(() => {
                         if (player.isColliding(s) && enabled == false) {
                             enabled = true
+                            toast.info("Upgrade Firerate", {
+                                description: "Press \"F\" to upgrade your teams firerate.",
+                                duration: 3000
+                            });
                             // toast({
                             //     title: 'Upgrade Firerate',
                             //     description: "Press \"F\" to upgrade your teams firerate.",
@@ -547,6 +573,10 @@
                     s.onUpdate(() => {
                         if (player.isColliding(s) && enabled == false) {
                             enabled = true
+                            toast.info("Upgrade Range", {
+                                description: "Press \"F\" to upgrade your teams range.",
+                                duration: 3000
+                            });
                             // toast({
                             //     title: 'Upgrade Range',
                             //     description: "Press \"F\" to upgrade your teams range.",
@@ -573,3 +603,5 @@
 </script>
 
 <canvas bind:this={cRef} class="w-full h-full"></canvas>
+
+<Toast />

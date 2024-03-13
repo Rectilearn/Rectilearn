@@ -5,6 +5,8 @@
 	import StudySetCard from './studysetCard.svelte';
 	import { page } from '$app/stores';
 	import CreateStudySetModal from './studysetCreateModal.svelte';
+	import Toast from '$lib/components/toast.svelte';
+	import { toast } from 'svelte-sonner';
 
 	$: selected = $page.url.hash || '';
 
@@ -43,7 +45,11 @@
 </svelte:head>
 
 {#if selected === ''}
-	<div class="stats-grid">
+	<div class="stats-grid" on:click={() => {
+		toast.info("ok", {
+			duration: 5000
+		});
+	}}>
 		<div class="stats-card" id="visit-streak">
 			<div
 				class="flex items-center justify-center rounded-full border-[10px] border-sky-600 size-24"
@@ -102,6 +108,8 @@
 {/if}
 
 <CreateStudySetModal bind:isOpen={isStudySetCreateModalOpen} />
+
+<Toast />
 
 <style lang="scss">
 	.stats-grid {

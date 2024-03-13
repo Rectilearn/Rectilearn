@@ -8,8 +8,8 @@
 	import { userData } from "$lib/stores";
 	import { browser } from "$app/environment";
 	import { page } from "$app/stores";
-	import Toast from "$lib/components/toast.svelte";
-	import { toast } from "svelte-sonner";
+	// import Toast from "$lib/components/toast.svelte";
+	// import { toast } from "svelte-sonner";
 
 	export let data: LayoutData;
 
@@ -34,4 +34,4 @@
 	<slot />
 </main>
 
-<Toast />
+<!-- <Toast /> -->

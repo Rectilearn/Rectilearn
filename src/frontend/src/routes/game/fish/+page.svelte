@@ -3,6 +3,8 @@
     import kaboom, { type KaboomCtx } from "kaboom";
     import "kaboom/global";
 	import { onKeysDown, onKeysReleased } from "../game";
+	import { toast } from "svelte-sonner";
+    import Toast from "$lib/components/toast.svelte";
 
     const avatar = "test";
 
@@ -333,7 +335,11 @@
                             cash.text = "Cash: " + cash.value;
                             COST += COST;
                         } else {
-                            alert("Not enough money");
+                            // alert("Not enough money");
+                            toast.warning("Not enough money", {
+                                description: "you need $"+COST*5+" for that upgrade!",
+                                duration: 5000
+                            });
                             // toast({
                             //     title: 'Not enough money',
                             //     description: "you need $"+COST*5+" for that upgrade!",
@@ -358,7 +364,11 @@
                             cash.text = "Cash: " + cash.value;
                             SPEED += 200;
                         } else {
-                            alert("not enough money")
+                            // alert("not enough money")
+                            toast.warning("Not enough money", {
+                                description: "you need $"+SPEED/20+" for that upgrade!",
+                                duration: 5000
+                            });
                             // toast({
                             //     title: 'Not enough money',
                             //     description: "you need $"+SPEED/20+" for that upgrade!",
@@ -376,7 +386,11 @@
                     var enabled = false
                     s.onUpdate(() => {
                         if (player.isColliding(s) && enabled == false) {
-                            enabled = true
+                            enabled = true;
+                            toast.info("Upgrade Money Per Question", {
+                                description: "Press \"F\" to upgrade money earned after answering a question.",
+                                duration: 3000
+                            });
                             // alert("Upgrade")
                             // toast({
                             //     title: 'Upgrade Money Per Question',
@@ -395,7 +409,11 @@
                     var enabled = false
                     s.onUpdate(() => {
                         if (player.isColliding(s) && enabled == false) {
-                            enabled = true
+                            enabled = true;
+                            toast.info("Upgrade Speed", {
+                                description: "Press \"F\" to upgrade your running speed.",
+                                duration: 3000
+                            });
                             // alert("Upgrade speed");
                             // toast({
                             //     title: 'Upgrade Speed',
@@ -424,3 +442,5 @@
 </script>
 
 <canvas bind:this={cRef} class="w-full h-full"></canvas>
+
+<Toast />
