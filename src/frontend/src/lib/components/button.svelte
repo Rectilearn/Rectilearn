@@ -1,12 +1,7 @@
 <script lang="ts">
-	import type { HTMLButtonAttributes } from 'svelte/elements';
+	import type { HTMLButtonAttributes } from "svelte/elements";
 
-	// export let isLoading: boolean | undefined = false;
-	export const isLoading: boolean | undefined = false;
-
-	interface $$Props extends HTMLButtonAttributes {
-		isLoading?: boolean;
-	}
+	type $$Props = HTMLButtonAttributes;
 </script>
 
 <button on:click on:dblclick {...$$restProps}>

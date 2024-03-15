@@ -1,7 +1,17 @@
 <script lang="ts">
 	import { fetchApi } from "$lib/api";
+	import Button from "$lib/components/button.svelte";
 	import { Form, TextField } from "$lib/components/forms";
 	import { Modal } from "$lib/components/modals";
+	import {
+		TabBody,
+		TabButton,
+		TabHead,
+		Tabs,
+		setTabIndex,
+		setTabIndexCallback
+	} from "$lib/components/tabs";
+	import TabContent from "$lib/components/tabs/tabContent.svelte";
 	import { studySets } from "$lib/stores";
 
 	export let isOpen: boolean;
@@ -63,8 +73,6 @@
 		}
 	}
 
-	let tabIndex = 0;
-
 	let reverseQNA = false;
 
 	let textAreaVal = "";
@@ -80,55 +88,61 @@
 		// setQuestions(importedQuestions);
 		questions = importedQuestions;
 		// setTabIndex(2);
-		tabIndex = 2;
+		setTabIndex(2);
 		// toast({
 		//     title: "Now, add a subject! It has to be at least 2 letters long."
 		// });
 	}
 </script>
 
-<Modal bind:isOpen>
-	<Form bind:errorMessages on:submit={createStudySet}>
-		<header class="flex justify-center items-center text-2xl mb-6">Create studyset</header>
+<Modal bind:isOpen class="max-w-80 min-w-80 max-w-80 min-w-80">
+	<header class="flex justify-center items-center text-2xl mb-6">Create studyset</header>
 
-		<section class="w-full">
-			<ul class="flex mb-6 w-full">
-				<li class="w-full">
-					<button
-						type="button"
-						class="w-full h-full p-2 focus-border"
-						on:click={() => (tabIndex = 0)}>Start</button
-					>
-				</li>
-				<li class="w-full">
-					<button
-						type="button"
-						class="w-full h-full p-2 focus-border"
-						on:click={() => (tabIndex = 1)}>Import</button
-					>
-				</li>
-				<li class="w-full">
-					<button
-						type="button"
-						class="w-full h-full p-2 focus-border"
-						on:click={() => (tabIndex = 2)}>Create</button
-					>
-				</li>
-			</ul>
-			{#if tabIndex === 0}
+	<Tabs>
+		<TabHead>
+			<TabButton>Start</TabButton>
+			<TabButton>Import</TabButton>
+			<TabButton>Create</TabButton>
+			<!-- <ul class="flex mb-6 w-full">
+						<li class="w-full">
+							<button
+								type="button"
+								class="w-full h-full p-2 focus-border"
+								on:click={() => (tabIndex = 0)}>Start</button
+							>
+						</li>
+						<li class="w-full">
+							<button
+								type="button"
+								class="w-full h-full p-2 focus-border"
+								on:click={() => (tabIndex = 1)}>Import</button
+							>
+						</li>
+						<li class="w-full">
+							<button
+								type="button"
+								class="w-full h-full p-2 focus-border"
+								on:click={() => (tabIndex = 2)}>Create</button
+							>
+						</li>
+					</ul> -->
+		</TabHead>
+		<TabBody class="max-w-3xl max-h-64 min-h-64 w-full grid place-items-center">
+			<TabContent>
 				<div>
-					<button
+					<Button
 						type="button"
 						class="w-full bg-[#3182ce] mb-2 text-white py-2 rounded-md font-medium"
-						on:click={() => (tabIndex = 1)}>Import set from quizlet</button
+						on:click={setTabIndexCallback(1)}>Import set from quizlet</Button
 					>
-					<button
+					<Button
 						type="button"
 						class="w-full bg-[#3182ce] text-white py-2 rounded-md font-medium"
-						on:click={() => (tabIndex = 2)}>Create a set yourself</button
+						on:click={setTabIndexCallback(2)}>Create a set yourself</Button
 					>
 				</div>
-			{:else if tabIndex === 1}
+			</TabContent>
+			<TabContent>
 				<div>
 					<p>Import from Quizlet</p>
 					<p>(Note: please choose the default settings)</p>
@@ -140,50 +154,53 @@
 					<textarea placeholder="exported study set" bind:value={textAreaVal} />
 
 					<button class="mt-2 w-full bg-blue-500" on:click={onImport}>Import</button>
-				</div>
-			{:else}
-				<div>
-					<label for="subject">Subject</label>
-					<TextField id="subject" bind:value={subject} />
-
+				</div></TabContent
+			>
+			<TabContent>
+				<Form bind:errorMessages on:submit={createStudySet}>
 					<div>
-						{#each questions as question, questionIdx}
-							<div class="max-w-md">
-								<label for="question-{questionIdx}">Question {questionIdx + 1}</label>
-								<TextField bind:value={question.question} id="question-{questionIdx}" />
+						<label for="subject">Subject</label>
+						<TextField id="subject" bind:value={subject} />
 
-								{#each question.answers as answer, answerIdx}
-									<label for="question-{questionIdx}-answer-{answerIdx}"
-										>Answer {answerIdx + 1} for question {questionIdx + 1}</label
+						<div>
+							{#each questions as question, questionIdx}
+								<div class="max-w-md">
+									<label for="question-{questionIdx}">Question {questionIdx + 1}</label>
+									<TextField bind:value={question.question} id="question-{questionIdx}" />
+
+									{#each question.answers as answer, answerIdx}
+										<label for="question-{questionIdx}-answer-{answerIdx}"
+											>Answer {answerIdx + 1} for question {questionIdx + 1}</label
+										>
+										<TextField id="question-{questionIdx}-answer-{answerIdx}" bind:value={answer} />
+									{/each}
+									<button
+										class="block"
+										type="button"
+										on:click={() =>
+											(questions[questionIdx].answers = [...questions[questionIdx].answers, ""])}
+										>Add answer</button
 									>
-									<TextField id="question-{questionIdx}-answer-{answerIdx}" bind:value={answer} />
-								{/each}
-								<button
-									class="block"
-									type="button"
-									on:click={() =>
-										(questions[questionIdx].answers = [...questions[questionIdx].answers, ""])}
-									>Add answer</button
-								>
-							</div>
-						{/each}
+								</div>
+							{/each}
+						</div>
+
+						<button
+							class="mt-4"
+							type="button"
+							on:click={() => (questions = [...questions, { question: "", answers: [""] }])}
+							>Add question</button
+						>
+
+						<button type="submit">Submit</button>
 					</div>
-
-					<button
-						class="mt-4"
-						type="button"
-						on:click={() => (questions = [...questions, { question: "", answers: [""] }])}
-						>Add question</button
-					>
-
-					<button type="submit">Submit</button>
-				</div>
-			{/if}
-		</section>
-		<!-- <Tabs bind:index on:change={(i) => (index = i)}>
+				</Form>
+			</TabContent>
+		</TabBody>
+	</Tabs>
+	<!-- <Tabs bind:index on:change={(i) => (index = i)}>
 
 		</Tabs> -->
-	</Form>
 </Modal>
 
 <style lang="scss">

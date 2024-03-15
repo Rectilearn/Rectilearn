@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { studySets } from "$lib/stores";
 	import type { IStudySet } from "$lib/types";
 	import { createEventDispatcher } from "svelte";
-	import { flip } from "svelte/animate";
+
 	export let studySet: IStudySet;
 
 	const dispatch = createEventDispatcher<{

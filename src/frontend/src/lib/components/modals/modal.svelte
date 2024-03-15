@@ -1,6 +1,16 @@
 <script lang="ts">
+	import type { HTMLDialogAttributes } from "svelte/elements";
+
+    interface $$Props extends HTMLDialogAttributes {
+        isOpen: boolean;
+        closeOnOutsideClick?: boolean;
+        contentClass?: string;
+    }
+
     export let isOpen: boolean = false;
     export const closeOnOutsideClick = true;
+    export let contentClass: string = "";
+
     let dialog: HTMLDialogElement | undefined;
     let dialogContent: HTMLDivElement | undefined;
 
@@ -50,7 +60,7 @@
     }}
 >
     <!-- Have an inner div so outside clicks can be detected -->
-    <div bind:this={dialogContent} class="content">
+    <div bind:this={dialogContent} class="content {contentClass}">
         <slot />
     </div>
 </dialog>

@@ -29,7 +29,7 @@
 	class="toaster group"
 	position="bottom-center"
 	closeButton
-	visibleToasts={50}
+	visibleToasts={4}
 	toastOptions={{
 		classes: {
 			toast:
