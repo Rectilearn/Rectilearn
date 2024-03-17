@@ -19,16 +19,27 @@
 	{...$$restProps}
 	class="tab-button {$$restProps.class || ''}"
 	data-state={$tabCtx.index === btnIndex ? "active" : "inactive"}
-	on:click={() => ($tabCtx.index = btnIndex)}><slot /></button
+	on:mousedown={() => ($tabCtx.index = btnIndex)}
 >
+	<div class="rounded-lg">
+		<slot />
+	</div>
+</button>
 
-<style lang="postcss">
+<style lang="scss">
 	.tab-button {
 		@apply inline-flex items-center justify-center whitespace-nowrap
-			rounded-md px-3 py-1 text-sm font-medium 
-			transition-all focus-visible:outline-none focus-visible:ring-2
+			px-3 py-1 text-sm font-medium border border-transparent
+			focus-visible:outline-none focus-visible:ring-2
 			focus-visible:ring-offset-2 disabled:pointer-events-none
-			disabled:opacity-50 data-[state=active]:bg-sky-700 data-[state=active]:text-gray-50
-			data-[state=active]:shadow;
+			disabled:opacity-50 mb-[-6px] z-50;
+
+		&:not([data-state="active"]) {
+			@apply border-b-transparent;
+		}
+
+		&[data-state="active"] {
+			@apply border-b-[rgb(45_55_72)] border-t-gray-400 border-x-gray-400;
+		}
 	}
 </style>
